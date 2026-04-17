@@ -25,6 +25,7 @@ router.get('/all', skinController.getAllSkins);
 // Rutas protegidas (requieren autenticación)
 router.get('/my-skins', authMiddleware, skinController.getUserSkins);
 router.post('/equip', authMiddleware, skinController.equipSkin);
+router.post('/unlock', authMiddleware, skinController.unlockSkin);
 router.post('/create-order', authMiddleware, skinController.createOrder);
 router.get('/order/:orderId', authMiddleware, skinController.checkOrderStatus);
 

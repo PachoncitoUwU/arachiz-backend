@@ -122,6 +122,28 @@ exports.equipSkin = async (req, res) => {
   }
 };
 
+// Desbloquear skin gratis (modo demo — sin pasarela de pago)
+exports.unlockSkin = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { skinId } = req.body;
+
+    const skin = await prisma.snakeSkin.findUnique({ where: { id: skinId } });
+    if (!skin) return res.status(404).json({ error: 'Skin no encontrada' });
+
+    await prisma.userSkin.upsert({
+      where:  { userId_skinId: { userId, skinId } },
+      update: {},
+      create: { userId, skinId, equipped: false },
+    });
+
+    res.json({ success: true, message: `${skin.name} desbloqueada` });
+  } catch (error) {
+    console.error('Error unlocking skin:', error);
+    res.status(500).json({ error: 'Error al desbloquear la skin' });
+  }
+};
+
 // Crear orden de compra (ePayco)
 exports.createOrder = async (req, res) => {
   try {
