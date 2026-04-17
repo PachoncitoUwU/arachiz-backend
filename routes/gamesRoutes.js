@@ -18,8 +18,8 @@ const MODELS = {
   wordle:   'wordleScore',
 };
 
-// Para reaction y wordle, menor score = mejor
-const LOWER_IS_BETTER = ['reaction', 'wordle'];
+// Para wordle, menor score = mejor (menos intentos)
+const LOWER_IS_BETTER = ['wordle'];
 
 // GET /api/games/:game/leaderboard
 router.get('/:game/leaderboard', async (req, res) => {
